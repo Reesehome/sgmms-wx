@@ -1,0 +1,16 @@
+@import '../common/style.less';
+#Meeting{
+    overflow: auto;
+    height: 100%;
+    background: @gl-bgColor;
+    .mint-navbar.is-fixed{
+        position: fixed!important;
+    }
+    .mint-tab-item.is-selected{
+        color: @gl-theme;
+        border-color: @gl-theme;
+    }
+    .content{
+        padding-top: 64px;
+    }
+}

@@ -1,0 +1,252 @@
+@import './theme.less';
+@import './reset.less';
+/*设置1px边线*/
+.setLine(@color: @gl-line){
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1px;
+    width: 200%;
+    height: 200%;
+    border: 1px solid @color;
+    color: @color;
+    transform-origin: left top;
+    transform: scale(0.5) 
+}
+.setTopLine(@color: @gl-line){
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 1px;
+    border-top: 1px solid @color;
+    color: @color;
+    transform-origin: 0 0;
+    transform: scaleY(0.5);
+}
+.setBottomLine(@color: @gl-line){
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    border-bottom: 1px solid @color;
+    color: @color;
+    transform-origin: 0 100%;
+    transform: scaleY(0.5);
+}
+.setLeftLine(@color: @gl-line){
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 1px;
+    border-left: 1px solid @color;
+    color: @color;
+    transform-origin: 0 0;
+    transform: scaleX(0.5);
+}
+.setRightLine(@color: @gl-line){
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 1px;
+    border-right: 1px solid @color;
+    color: @color;
+    transform-origin: 100% 0;
+    transform: scaleX(0.5);
+}
+.line-all, .line-t, .line-b, .line-tb, .line-l, .line-r{
+    position: relative;
+}
+.line-all {
+    &:before {
+        .setLine()
+    }
+}
+.line-t {
+    &:before {
+        .setTopLine()
+    }
+}
+.line-b {
+    &:before {
+        .setBottomLine()
+    }
+}
+.line-tb{
+    &:before {
+        .setTopLine()
+    }
+    &:after {
+        .setBottomLine()
+    }
+}
+.line-l {
+    &:before {
+        .setLeftLine()
+    }
+}
+.line-r {
+    &:before {
+        .setRightLine()
+    }
+}
+/*** end ****/
+
+/* 卡片通用样式 */
+.card {
+    position: relative;
+    padding: 0.28rem 0.32rem 0.18rem;
+    margin-bottom: 0.2rem;
+    background: @gl-content;
+    text-align: left;
+    .card_head {
+        width: 82%;
+        font-size: 0.34rem;
+        color: @gl-text;
+    }
+    .card_content {
+        margin: 0.12rem 0;
+        font-size: 0.3rem;
+        line-height: 0.48rem;
+        color: @gl-grey-text;
+        i {
+            display: inline-block;
+            width: 0.3rem;
+            height: 0.3rem;
+        }
+        .card_content_data {
+            color: #000;
+        }
+    }
+    .card_status {
+        position: absolute;
+        top: 0.28rem;
+        right: 0.32rem;
+        padding: 0.1rem 0.14rem;
+        background: inherit;
+        color: pink;
+        &::before {
+            border-color: pink;
+            border-radius: 0.15rem;
+        }
+    }
+}
+/*** end ***/ 
+
+/* 骨架屏通用样式 */
+.skeleton{
+    background: @gl-bgColor;
+    .skeleton_card{
+        background: @gl-content;
+        margin-bottom: 0.2rem;
+        height: 3.2rem;
+        .skeleton_head{
+            margin-bottom: 0.3rem;
+            background: @gl-bgColor;
+            width: 2.3rem;
+            height: 0.5rem;
+        }
+        .skeleton_item{
+            margin-bottom: 0.2rem;
+            background: @gl-bgColor;
+            height: 0.4rem;
+        }
+    }
+}
+
+/*** end ***/
+
+/*设置会议标志颜色*/
+.STARTED{
+    color: @stat-started!important;
+    &::before{
+        border-color: @stat-started!important
+    }
+}
+.UNSTART{
+    color: @stat-ready!important;
+    &::before{
+        border-color: @stat-ready!important
+    }
+}
+.ENDED{
+    color: @stat-finish!important;
+    &::before{
+        border-color: @stat-finish!important
+    }
+}
+/*** end ***/
+
+/*设置签到标志颜色*/
+.C{
+    color: @stat-late!important;
+    &::before{
+        border-color: @stat-late!important
+    }
+}
+.W{
+    color: @stat-unsign!important;
+    &::before{
+        border-color: @stat-unsign!important
+    }
+}
+.Y{
+    color: @stat-signed!important;
+    &::before{
+        border-color: @stat-signed!important
+    }
+}
+/*** end ***/
+
+/*设置标志颜色*/
+.col_green{
+    color: @gl-success!important;
+}
+.col_red{
+    color: @gl-err!important;
+}
+.col_theme{
+    color: @gl-theme!important;
+}
+.bg_org{
+    background: @stat-late!important;
+}
+/*** end ***/ 
+
+/* 设置进场动画 */
+.slide-up-enter-active {
+    transition: all .50s ease-out;
+}
+
+.slide-up-enter {
+    transform: translate(0, 1rem);
+    opacity: 0;
+}
+
+.slide-left-el{
+    position: absolute;
+    width: 100%;
+    transition: all .8s ease;
+}
+
+.slide-left-enter{
+    opacity: 0;
+    -webkit-transform: translate(100%, 0);
+    transform: translate(100%, 0);
+}
+
+.slide-left-leave-active{
+    opacity: 0;
+    -webkit-transform: translate(-100%, 0);
+    transform: translate(-100% 0);
+}
+/*** end ***/
+

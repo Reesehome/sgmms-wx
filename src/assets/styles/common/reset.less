@@ -1,0 +1,49 @@
+@import './theme.less';
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, section, input, button,textarea, p, th, td {
+    margin: 0;
+    padding: 0;
+}
+body {
+    /*禁止用户选择文字*/
+    -webkit-user-select: none;
+    /*禁用长按页面时的弹出菜单*/
+    -webkit-touch-callout: none;
+    /*移动端横竖屏字体乎大乎小*/
+    -webkit-text-size-adjust: 100%;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+ul, ol {
+    list-style: none;
+}
+img {
+    vertical-align: top;
+}
+/*禁止点击高亮*/
+a, input, button {
+    -webkit-tap-highlight-color: @gl-alpha;
+}
+input, textarea, button {
+    /*取消chrome下默认的文本框聚焦样式*/
+    border: none;
+    outline: none;
+    /*消除输入框和按钮的原生外观，在iOS上加上这个属性才能给按钮和输入框自定义样式*/
+    -webkit-appearance: none;
+    // background: inherit;
+}
+i, em {
+    font-style: normal;
+}
+section {
+    background-color: @gl-alpha; //安卓浏览器貌似默认是白色
+}
+iframe{
+    display: none;
+}
+/*mint样式替换*/
+.mint-tab-item-label{
+    font-size: 0.32rem;//nav字体
+}
+/*** end ***/

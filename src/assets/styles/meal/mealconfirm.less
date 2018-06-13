@@ -1,0 +1,44 @@
+@import '../common/style.less';
+#mealconfirm {
+    height: 100%;
+    padding: 0.28rem 0;
+    box-sizing: border-box;
+    background: @gl-bgColor;
+    .card {
+        margin-bottom: 0.2rem;
+    }
+    .scanConfirm {
+        border-top:1px solid @gl-bgColor;
+        border-bottom:1px solid @gl-bgColor;
+        background: @gl-content;
+        .tips_pic {
+            margin: 0.5rem auto  0.3rem;
+            width: 2.54rem;
+            height: 2.54rem;
+            line-height: 2.54rem;
+            border-radius: 50%;
+            text-align: center;
+            color: @gl-content;
+            font-size: 0.4rem;
+        }
+        .tips_welcome{
+            background: url('../../images/meal03.png') @gl-theme;
+            background-size: 2.6rem;
+        }
+        .tips_norecord{
+            background: url('../../images/meal02.png');
+            background-size: 2.55rem;
+        }
+        .tips_untimely{
+            background: url('../../images/meal01.png');
+            background-size: 2.55rem;
+        }
+        .tips_times, .tips_err{
+            margin-bottom: 0.55rem;
+            font-size: 0.3rem;
+        }
+        .tips_err{
+            color: @stat-unsign;
+        }
+    }
+}

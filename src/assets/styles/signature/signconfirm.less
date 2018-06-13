@@ -1,0 +1,42 @@
+@import '../common/style.less';
+#signconfirm {
+    height: 100%;
+    padding: 0.28rem 0;
+    box-sizing: border-box;
+    background: @gl-bgColor;
+    .card {
+        margin-bottom: 0.2rem;
+    }
+    .scanConfirm {
+        padding-top: 0.3rem;
+        border-top:1px solid @gl-bgColor;
+        border-bottom:1px solid @gl-bgColor;
+        background: @gl-content;
+        .sign_date{
+            padding-left: 0.56rem;
+            font-size: 0.3rem;
+            text-align: left;
+        }
+        .tips_welcome {
+            box-sizing: border-box;
+            margin: 0.5rem auto;
+            width: 2.7rem;
+            padding:0.8rem 0.7rem;
+            background: @stat-signed;
+            border-radius: 50%;
+            text-align: center;
+            color: @gl-content;
+            font-size: 0.36rem;
+        }
+        .tips_err{
+            margin: 2rem 0;
+            font-size: 0.3rem;
+            color: @gl-err
+        }
+        .sign_add{
+            margin-bottom: 0.55rem;
+            font-size: 0.3rem;
+        }
+    }
+}
+    
