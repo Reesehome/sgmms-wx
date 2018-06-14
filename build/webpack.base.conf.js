@@ -20,15 +20,21 @@ function getEntry (rootSrc, pattern) {
   }, {})
 }
 
-const appEntry = { app: resolve('./src/main.js') }
-const pagesEntry = getEntry(resolve('./src'), 'pages/**/main.js')
-const entry = Object.assign({}, appEntry, pagesEntry)
+// const appEntry = { app: resolve('./src/main.js') }
+// const pagesEntry = getEntry(resolve('./src'), 'pages/**/main.js')
+// const libEntry = getEntry(resolve('./src/lib/view'), 'lib/view')
+
+// const entry = Object.assign({}, appEntry, pagesEntry, libEntry)
 
 module.exports = {
   // 如果要自定义生成的 dist 目录里面的文件路径，
   // 可以将 entry 写成 {'toPath': 'fromPath'} 的形式，
   // toPath 为相对于 dist 的路径, 例：index/demo，则生成的文件地址为 dist/index/demo.js
-  entry,
+  entry: {
+    app: resolve('./src/main.js'),               // app 字段被识别为 app 类型
+    login: resolve('./src/pages/login/main.js'),   // 其余字段被识别为 page 类型
+    'lib/iview/button': resolve('./src/lib/iview/button/index')
+  },
   target: require('mpvue-webpack-target'),
   output: {
     path: config.build.assetsRoot,
@@ -41,7 +47,9 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue': 'mpvue',
-      '@': resolve('src')
+      '@': resolve('src'),
+      '@cmpt': resolve('src/components'), //公用组件
+      '@assets': resolve('src/assets')
     },
     symlinks: false,
     aliasFields: ['mpvue', 'weapp', 'browser'],

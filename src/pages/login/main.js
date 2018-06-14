@@ -8,7 +8,7 @@ export default {
     // 这个字段走 main.json
     config: {
         "usingComponents": {
-            "i-button": "../../components/button/index"
+            "i-button": "../../lib/iview/button/index.wxml" 
         }
     }
 }

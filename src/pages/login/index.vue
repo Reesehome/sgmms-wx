@@ -20,6 +20,8 @@
 </template>
 
 <script>
+  // import { Button } from 'mint-ui';
+
   export default {
     data() {
       return {
