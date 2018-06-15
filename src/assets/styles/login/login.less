@@ -6,7 +6,6 @@
 }
 #login header{
     height: 4rem;
-    // background: pink;
     img{
         width: 2rem;
         height: 2rem;
@@ -14,6 +13,7 @@
     }
 }
 .phone, .verifyCode{
+    display: flex;
     line-height: 0.93rem;
     height: 0.93rem;
     padding: 0.1rem 0 0.1rem 0.34rem;
@@ -38,7 +38,7 @@
         }
     }
     .getCode, .wait{
-        height: 100%;
+        line-height: 0.93rem;
         padding-left: 0.3rem;
         font-size: 0.26rem;
         color: @gl-theme;
@@ -50,8 +50,10 @@
     }
 }
 .submit{
+    display: block;
     width: 100%;
     height: 0.98rem;
     margin: 0.8rem 0;
-    background: @gl-theme
+    // background: @gl-theme
 }
+
