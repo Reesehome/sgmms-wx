@@ -1,7 +1,21 @@
 import axios from 'axios'
 import {Auth} from './dataHandle.js'
 axios.defaults.timeout = 5000;
-
+axios.defaults.adapter = function (config) {
+    return new Promise((resolve, reject) => {
+        console.log(config)
+        // TODO wx.request(...)
+        wx.request({
+            url: config.url,
+            data: config.data,
+            header: config.headers,
+            method: config.method,
+            success: res =>{
+               console.log(res) 
+            }
+        })
+    })
+}
 //请求拦截器
 axios.interceptors.request.use(config => {
     config.headers.common['X-Requested-With'] = 'XMLHttpRequest';
