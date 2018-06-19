@@ -20,6 +20,8 @@
 </template>
 
 <script>
+  import { Verify } from '@utils/dataHandle'
+  import { getVerfiyCode, loginRequest } from '@api/api'
   const { $Toast } = require('../../lib/iview/base/index.js') ;
   export default {
     data() {

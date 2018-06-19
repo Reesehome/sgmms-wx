@@ -52,8 +52,8 @@ module.exports = {
       '@cmpt' : resolve('src/components'),
       '@style' : resolve('src/assets/styles'),
       // '@script': resolve('src/assets/scripts'),
-      // '@util': resolve('src/util'),
-      // '@api': resolve('src/api')
+      '@utils': resolve('src/utils'),
+      '@api': resolve('src/api')
     },
     symlinks: false,
     aliasFields: ['mpvue', 'weapp', 'browser'],
