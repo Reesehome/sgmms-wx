@@ -20,7 +20,7 @@
 </template>
 
 <script>
-  import { Verify } from '@utils/dataHandle'
+  import { Verify, Auth } from '@utils/dataHandle'
   import { getVerfiyCode, loginRequest } from '@api/api'
   const { $Toast } = require('../../lib/iview/base/index.js') ;
   export default {
@@ -96,13 +96,11 @@
           return
         }
         loginRequest(this.form).then(res => {
-          if (res.success) {
-            Auth.setToken(res.access_token)
-            // this.$router.push({ path: '/mylist' }) 
-            this.$router.push({ path: '/pages/mylist/main' }) 
-          }
+          Auth.setToken(res.access_token)
+          // this.$router.push({ path: '/mylist' }) 
+          this.$router.push({ path: '/pages/mylist/main' }) 
         }).catch(err => {
-          $Toast({content:err.message})
+          $Toast({content: err.message})
         })
       }
     } 

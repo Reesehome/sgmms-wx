@@ -8,6 +8,14 @@ axios.defaults.adapter = config => {
             data: config.data,
             header: config.headers,
             method: config.method,
+            // 这里设置的回调函数，相当于请求接口后的then()
+            success(res){
+                resolve(res)
+            },
+            // 这里设置的回调函数，相当于请求接口后的catch()
+            fail(err){
+                reject(err)
+            }
         })
     }) 
 }
@@ -33,6 +41,9 @@ axios.interceptors.response.use(response => {
     const data = response.data;
     if (data && !data.success) {
         // 若不是正确的返回code，就抛出错误
+        if(!data.description){
+            data.description = '请求失败'
+        }
         const err = new Error(data.description)
         err.data = data
         err.response = response
