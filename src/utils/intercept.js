@@ -1,20 +1,15 @@
 import axios from 'axios'
 import {Auth} from './dataHandle.js'
 axios.defaults.timeout = 5000;
-axios.defaults.adapter = function (config) {
+axios.defaults.adapter = config => {
     return new Promise((resolve, reject) => {
-        console.log(config)
-        // TODO wx.request(...)
         wx.request({
             url: config.url,
             data: config.data,
             header: config.headers,
             method: config.method,
-            success: res =>{
-               console.log(res) 
-            }
         })
-    })
+    }) 
 }
 //请求拦截器
 axios.interceptors.request.use(config => {
@@ -30,6 +25,8 @@ axios.interceptors.request.use(config => {
     })
     return Promise.reject(error);
 });
+
+
 
 //响应拦截器
 axios.interceptors.response.use(response => {

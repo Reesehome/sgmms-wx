@@ -98,7 +98,8 @@
         loginRequest(this.form).then(res => {
           if (res.success) {
             Auth.setToken(res.access_token)
-            this.$router.push({ path: '/mylist' })
+            // this.$router.push({ path: '/mylist' }) 
+            this.$router.push({ path: '/pages/mylist/main' }) 
           }
         }).catch(err => {
           $Toast({content:err.message})

@@ -50,6 +50,7 @@ module.exports = {
       'vue': 'mpvue',
       '@': resolve('src'),
       '@cmpt' : resolve('src/components'),
+      '@pages' : resolve('src/pages'),
       '@style' : resolve('src/assets/styles'),
       // '@script': resolve('src/assets/scripts'),
       '@utils': resolve('src/utils'),

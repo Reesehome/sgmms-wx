@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "mint-ui": "^2.2.13",
     "mpvue": "^1.0.11",
+    "mpvue-router-patch": "^0.2.1",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
