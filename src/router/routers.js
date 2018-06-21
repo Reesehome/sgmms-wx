@@ -1,34 +1,28 @@
-import Vue from 'vue'
-// import Router from 'vue-router'
-import Login from '@pages/login/Login'
-import MyList from '@pages/mylist/main'
-// import Meeting from '@cmpt/meeting/Meeting'
-// import Detail from '@cmpt/meeting/Detail'
-// import SignConfirm from '@cmpt/signature/SignConfirm'
-// import SignRecord from '@cmpt/signature/SignRecord'
-// import MealRecord from '@cmpt/meal/MealRecord'
-// import MealConfirm from '@cmpt/meal/MealConfirm'
-
-// Vue.use(Router)
-
-export default new Router({
-  routes: [
+module.exports = [
+    // {
+    //     path: '/',
+    //     redirect: '/pages/login/Login'
+    // },
     {
-      path: '/',
-      redirect:'/login'
+        path: '/pages/login/Login',
+        name: 'Login',
+        meta: {
+            noLogin: true
+        },
+        config: {
+            "usingComponents": {
+                "i-button": "../../lib/iview/button/index",
+                "i-toast": "../../lib/iview/toast/index"
+            },
+            navigationBarTitleText: '登录页'
+        }
     },
     {
-      path: '/login',
-      name: 'Login',
-      component: Login,
-      meta:{
-        noLogin: true 
-      }
-    },
-    {
-      path: '/mylist',
-      name: 'MyList',
-      component: MyList,
+        path: '/pages/meeting/MyList',
+        name: 'MyList',
+        config: {
+            navigationBarTitleText: '会议列表'
+        }
     },
     // {
     //   path: '/meeting',
@@ -70,5 +64,5 @@ export default new Router({
     //   name: 'SignConfirm',
     //   component: SignConfirm
     // }
-  ]
-})
+]
+
