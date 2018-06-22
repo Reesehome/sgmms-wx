@@ -20,7 +20,7 @@ function resolve (dir) {
 //     return res
 //   }, {})
 // }
-const entry = MpvueEntry.getEntry('../src/router/routers.js')
+const entry = MpvueEntry.getEntry('./src/router/routes.js')
 
 // const appEntry = { app: resolve('./src/main.js') }
 // const pagesEntry = getEntry(resolve('./src'), 'pages/**/main.js')
