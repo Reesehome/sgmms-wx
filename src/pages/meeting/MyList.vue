@@ -1,10 +1,9 @@
 <template>
     <!-- <div id="MyList" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading.stat" infinite-scroll-distance="10"> -->
-        <div>
-            hello
+    <div>
         <!-- 骨架屏 -->
-        <!-- <div class="skeleton" v-show="skeleton">
-            <section v-for="item in 3" class="skeleton_card card">
+        <div class="skeleton" v-show="skeleton">
+            <section v-for="item in 3" :key="item.title" class="skeleton_card card">
                 <div class="skeleton_head card_head"></div>
                 <div class="card_content">
                     <p class="skeleton_item"></p>
@@ -13,29 +12,33 @@
                     <p class="skeleton_item"></p>
                 </div>
             </section>
-        </div> -->
-        <!-- <div v-show="!skeleton"> -->
-        <!-- <div>
-            <card-preview v-for="item in dataList" :key="item.title" @jumpToDetail="jumpToDetail(item)" :statText="getMeetingStatName(item.status)"
-            :statColor="item.status" :title="item.title" transition="slide-up" :delayTime="item.delayTime" isContinue>
-                <card-item icon="iconfont icon-time" label="开始时间: " :value="item.begin_time"></card-item>
-                <card-item icon="iconfont icon-time" label="结束时间: " :value="item.end_time"></card-item>
-                <card-item icon="iconfont icon-coordinates" label="会议地点: " :value="item.venue"></card-item>
-                <card-item icon="iconfont icon-group" label="会议人数: " :value="item.total_users"></card-item>
-            </card-preview>
+        </div>
+        <div v-show="skeleton">
             <div>
-                <mt-spinner type="triple-bounce" v-show="loading.stat"></mt-spinner>
-                <span v-show="!loading.stat" class="loading_msg">—————&nbsp;&nbsp;&nbsp;{{loading.msg}}&nbsp;&nbsp;&nbsp;—————</span>
+                <card-preview v-for="(item,index) in dataList" :key="index" @jumpToDetail="jumpToDetail(item)" :statText="getMeetingStatName(item.status)"
+                :statColor="item.status" :title="item.title" transition="slide-up" :delayTime="item.delayTime" isContinue>
+                    <card-item icon="iconfont icon-time" label="开始时间: " :value="item.begin_time"></card-item>
+                    <card-item icon="iconfont icon-time" label="结束时间: " :value="item.end_time"></card-item>
+                    <card-item icon="iconfont icon-coordinates" label="会议地点: " :value="item.venue"></card-item>
+                    <card-item icon="iconfont icon-group" label="会议人数: " :value="item.total_users"></card-item>
+                </card-preview>
+                <div>
+                    <!-- <mt-spinner type="triple-bounce" v-show="loading.stat"></mt-spinner> -->
+                    <span v-show="!loading.stat" class="loading_msg">—————&nbsp;&nbsp;&nbsp;{{loading.msg}}&nbsp;&nbsp;&nbsp;—————</span>
+                </div>
             </div>
-        </div>   -->
+        </div> 
+        <!-- <i-toast id="toast" />  -->
     </div> 
 </template>
 
 <script>
     // import { Spinner } from 'mint-ui'
-    // import { CardPreview, CardItem } from '@cmpt/card'
-    // import { getMeetingList } from '@api/api'
-    // import { getMeetingStatName } from '@util/constants'
+    import { CardPreview } from '@cmpt/card/CardPreview'
+    import { CardItem } from '@cmpt/card/CardItem'
+    import { getMeetingList } from '@api/api'
+    import { getMeetingStatName } from '@utils/constants'
+    // const { $Toast } = require('../../lib/iview/base/index.js') ;
 
     export default {
         data() {
@@ -52,11 +55,11 @@
                 skeleton: true,
             }
         },
-        // components: {
-        //     CardPreview,
-        //     CardItem,
-        //     mtSpinner: Spinner,
-        // },
+        components: {
+            CardPreview,
+            CardItem,
+            // mtSpinner: Spinner,
+        },
 
         methods: {
             getMeetingList() {
@@ -71,18 +74,19 @@
                         this.setDelayTime()
                         return;
                     }
+                    // console.log(this.dataList)
                     this.dataList = res.content
                     this.setDelayTime()
                     this.skeleton = false
                 }).catch(err => {
-                    this.$toast(err.message)
+                    // $Toast({content: err.message})
                 })
             },
             getMeetingStatName(value) {
                 return getMeetingStatName(value)
             },
             jumpToDetail(value) {
-                this.$router.push({ path: '/meeting/detail/' + value.code })
+                this.$router.push({ path: '/pages/meeting/detail/' + value.code })
             },
             loadMore() {
                 if (this.refetch) {
@@ -106,7 +110,7 @@
             }
         },
         mounted() {
-            // this.getMeetingList()
+            this.getMeetingList()
         }
     }
 </script>

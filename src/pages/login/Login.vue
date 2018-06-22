@@ -97,7 +97,6 @@
         }
         loginRequest(this.form).then(res => {
           Auth.setToken(res.access_token)
-          // this.$router.push({ path: '/mylist' }) 
           this.$router.push({ path: '/pages/meeting/MyList' }) 
         }).catch(err => {
           $Toast({content: err.message})
