@@ -1,10 +1,9 @@
 <template>
     <div>
         <p>
-            <i v-show="icon" :class="icon"></i>
-            <span v-show="label">{{label}}</span>
-            <span class="card_content_data" v-show="value">{{value}}</span>
-            <slot></slot>
+            <i v-if="icon" :class="icon"></i>
+            <span v-if="label">{{label}}</span>
+            <span class="card_content_data" v-if="value">{{value}}</span>
         </p>
     </div>
 </template>

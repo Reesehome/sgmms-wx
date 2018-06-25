@@ -1,5 +1,6 @@
 <script>
 export default {
+  name: 'App'
   // created () {
   //   // 调用API从本地缓存中获取数据
   //   const logs = wx.getStorageSync('logs') || []
@@ -12,14 +13,14 @@ export default {
 </script>
 
 <style>
-.container {
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 200rpx 0;
-  box-sizing: border-box;
+  color: #2c3e50;
+  font-size: 0.26rem;
 }
 /* this rule will be remove */
 * {

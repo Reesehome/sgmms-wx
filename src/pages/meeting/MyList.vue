@@ -1,8 +1,8 @@
 <template>
     <!-- <div id="MyList" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading.stat" infinite-scroll-distance="10"> -->
-    <div>
+    <div id="app">
         <!-- 骨架屏 -->
-        <div class="skeleton" v-show="skeleton">
+        <!-- <div class="skeleton" v-show="skeleton">
             <section v-for="item in 3" :key="item.title" class="skeleton_card card">
                 <div class="skeleton_head card_head"></div>
                 <div class="card_content">
@@ -12,30 +12,43 @@
                     <p class="skeleton_item"></p>
                 </div>
             </section>
-        </div>
+        </div> -->
         <div v-show="skeleton">
             <div>
                 <card-preview v-for="(item,index) in dataList" :key="index" @jumpToDetail="jumpToDetail(item)" :statText="getMeetingStatName(item.status)"
-                :statColor="item.status" :title="item.title" transition="slide-up" :delayTime="item.delayTime" isContinue>
-                    <card-item icon="iconfont icon-time" label="开始时间: " :value="item.begin_time"></card-item>
-                    <card-item icon="iconfont icon-time" label="结束时间: " :value="item.end_time"></card-item>
-                    <card-item icon="iconfont icon-coordinates" label="会议地点: " :value="item.venue"></card-item>
-                    <card-item icon="iconfont icon-group" label="会议人数: " :value="item.total_users"></card-item>
+                    :item="item" :statColor="item.status" :title="item.title" transition="slide-up" :delayTime="item.delayTime"
+                    isContinue>
+                    <div>
+                        <i class="iconfont icon-time"></i>
+                        <span>开始时间： {{item.begin_time}}</span>
+                    </div>
+                    <div>
+                        <i class="iconfont icon-time"></i>
+                        <span>结束时间: {{item.end_time}}</span>
+                    </div>
+                    <div>
+                        <i class="iconfont icon-coordinates"></i>
+                        <span>会议地点: {{item.venue}}</span>
+                    </div>
+                    <div>
+                        <i class="iconfont icon-group"></i>
+                        <span>会议人数: {{item.total_users}}</span>
+                    </div>
                 </card-preview>
                 <div>
                     <!-- <mt-spinner type="triple-bounce" v-show="loading.stat"></mt-spinner> -->
                     <span v-show="!loading.stat" class="loading_msg">—————&nbsp;&nbsp;&nbsp;{{loading.msg}}&nbsp;&nbsp;&nbsp;—————</span>
                 </div>
             </div>
-        </div> 
+        </div>
         <!-- <i-toast id="toast" />  -->
-    </div> 
+    </div>
 </template>
 
 <script>
     // import { Spinner } from 'mint-ui'
-    import { CardPreview } from '@cmpt/card/CardPreview'
-    import { CardItem } from '@cmpt/card/CardItem'
+    import { CardPreview } from '@cmpt/card'
+    import { CardItem } from '@cmpt/card'
     import { getMeetingList } from '@api/api'
     import { getMeetingStatName } from '@utils/constants'
     // const { $Toast } = require('../../lib/iview/base/index.js') ;
@@ -74,7 +87,6 @@
                         this.setDelayTime()
                         return;
                     }
-                    // console.log(this.dataList)
                     this.dataList = res.content
                     this.setDelayTime()
                     this.skeleton = false
@@ -102,11 +114,11 @@
             // 设置每个卡片进场动画延迟间隔为0.3s
             setDelayTime(val = this.dataList) {
                 if (Array.isArray(val)) {
-                    this.dataList.forEach((item,i) => {
+                    this.dataList.forEach((item, i) => {
                         item.delayTime = i * 0.3
                     });
                 }
-                
+
             }
         },
         mounted() {
