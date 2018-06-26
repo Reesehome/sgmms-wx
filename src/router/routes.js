@@ -21,7 +21,11 @@ module.exports = [
         path: '/pages/meeting/MyList',
         name: 'MyList',
         config: {
-            navigationBarTitleText: '会议列表'
+            navigationBarTitleText: '会议列表',
+            "usingComponents": {
+                "i-spin": "../../lib/iview/spin/index",
+                "i-page": "../../lib/iview/page/index"
+            },
         }
     },
     // {

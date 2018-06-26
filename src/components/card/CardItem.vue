@@ -23,9 +23,7 @@
             value: {
                 default: ''
             }
-        },
-        methods: {
-        },
+        }
     }
 </script>
 

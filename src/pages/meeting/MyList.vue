@@ -1,63 +1,71 @@
 <template>
     <!-- <div id="MyList" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading.stat" infinite-scroll-distance="10"> -->
     <div id="app">
-        <!-- 骨架屏 -->
-        <!-- <div class="skeleton" v-show="skeleton">
-            <section v-for="item in 3" :key="item.title" class="skeleton_card card">
-                <div class="skeleton_head card_head"></div>
-                <div class="card_content">
-                    <p class="skeleton_item"></p>
-                    <p class="skeleton_item"></p>
-                    <p class="skeleton_item"></p>
-                    <p class="skeleton_item"></p>
-                </div>
-            </section>
-        </div> -->
-        <div v-show="skeleton">
-            <div>
-                <card-preview v-for="(item,index) in dataList" :key="index" @jumpToDetail="jumpToDetail(item)" :statText="getMeetingStatName(item.status)"
-                    :item="item" :statColor="item.status" :title="item.title" transition="slide-up" :delayTime="item.delayTime"
-                    isContinue>
-                    <div>
-                        <i class="iconfont icon-time"></i>
-                        <span>开始时间： {{item.begin_time}}</span>
+        <div id="MyList">
+
+            <!-- 骨架屏 -->
+            <div class="skeleton" v-if="skeleton">
+                <section v-for="item in 3" :key="item.title" class="skeleton_card card">
+                    <div class="skeleton_head card_head"></div>
+                    <div class="card_content">
+                        <p class="skeleton_item"></p>
+                        <p class="skeleton_item"></p>
+                        <p class="skeleton_item"></p>
+                        <p class="skeleton_item"></p>
                     </div>
-                    <div>
-                        <i class="iconfont icon-time"></i>
-                        <span>结束时间: {{item.end_time}}</span>
-                    </div>
-                    <div>
-                        <i class="iconfont icon-coordinates"></i>
-                        <span>会议地点: {{item.venue}}</span>
-                    </div>
-                    <div>
-                        <i class="iconfont icon-group"></i>
-                        <span>会议人数: {{item.total_users}}</span>
-                    </div>
-                </card-preview>
+                </section>
+            </div>
+            <div v-if="!skeleton">
                 <div>
-                    <!-- <mt-spinner type="triple-bounce" v-show="loading.stat"></mt-spinner> -->
-                    <span v-show="!loading.stat" class="loading_msg">—————&nbsp;&nbsp;&nbsp;{{loading.msg}}&nbsp;&nbsp;&nbsp;—————</span>
+                    <card-preview v-for="(item,index) in dataList" :key="index" @jumpToDetail="jumpToDetail(item)" :statText="getMeetingStatName(item.status)"
+                        :item="item" :statColor="item.status" :title="item.title" transition="slide-up" :delayTime="item.delayTime"
+                        isContinue>
+                        <div>
+                            <i class="iconfont icon-time"></i>
+                            <span>开始时间: {{item.begin_time}}</span>
+                        </div>
+                        <div>
+                            <i class="iconfont icon-time"></i>
+                            <span>结束时间: {{item.end_time}}</span>
+                        </div>
+                        <div>
+                            <i class="iconfont icon-coordinates"></i>
+                            <span>会议地点: {{item.venue}}</span>
+                        </div>
+                        <div>
+                            <i class="iconfont icon-group"></i>
+                            <span>会议人数: {{item.total_users}}</span>
+                        </div>
+                    </card-preview>
+                    <div>
+                        <i-spin custom v-if="loading.stat"></i-spin>
+                        <span v-if="!loading.stat" class="loading_msg">—————&nbsp;&nbsp;&nbsp;{{loading.msg}}&nbsp;&nbsp;&nbsp;—————</span>
+                    </div>
                 </div>
             </div>
+            <!-- 分页 -->
+            <i-page :current="pagination" total="5" @change="loadMore" >
+                <view slot="prev"> 前 </view>
+                <view slot="next"> 后 </view>
+            </i-page>
+            <i-toast id="toast" />
         </div>
-        <!-- <i-toast id="toast" />  -->
     </div>
 </template>
 
 <script>
-    // import { Spinner } from 'mint-ui'
     import { CardPreview } from '@cmpt/card'
     import { CardItem } from '@cmpt/card'
     import { getMeetingList } from '@api/api'
     import { getMeetingStatName } from '@utils/constants'
-    // const { $Toast } = require('../../lib/iview/base/index.js') ;
+    const { $Toast } = require('../../lib/iview/base/index.js');
 
     export default {
         data() {
             return {
                 dataList: [],
                 page: 0,
+                pagination: 1,
                 size: 5,
                 total_page: 1,
                 loading: {
@@ -71,7 +79,6 @@
         components: {
             CardPreview,
             CardItem,
-            // mtSpinner: Spinner,
         },
 
         methods: {
@@ -90,8 +97,9 @@
                     this.dataList = res.content
                     this.setDelayTime()
                     this.skeleton = false
+
                 }).catch(err => {
-                    // $Toast({content: err.message})
+                    $Toast({content: err.message})
                 })
             },
             getMeetingStatName(value) {
@@ -100,11 +108,18 @@
             jumpToDetail(value) {
                 this.$router.push({ path: '/pages/meeting/detail/' + value.code })
             },
-            loadMore() {
+            loadMore(detail) {
                 if (this.refetch) {
+                    const type = detail.target.type;
                     this.loading.stat = true;
                     if (this.total_page != this.page + 1) {
-                        this.page++;
+                        if (type === 'next') {
+                            this.pagination ++
+                            this.page ++
+                        } else if (type === 'prev') {
+                            this.pagination --
+                            this.page --
+                        }
                         this.getMeetingList();
                     } else {
                         this.refetch = false
