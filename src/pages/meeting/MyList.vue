@@ -91,8 +91,8 @@
                     }
                     if (this.refetch) {
                         this.dataList = this.dataList.concat(res.content);
-                        this.setDelayTime()
-                        return;
+                        // this.setDelayTime()
+                        // return;
                     }
                     this.dataList = res.content
                     this.setDelayTime()

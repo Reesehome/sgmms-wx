@@ -33,7 +33,8 @@ export const loginRequest = params => {
  * @returns {AxiosPromise<any>}
  */
 export const getMeetingList = params => {
-    return axios.get(`${ baseUrl }/api/conference`, {params:params});
+    return axios.get(`${ baseUrl }/api/conference?page=${params.page}&size=${params.size}`);
+    // return axios.get(`${ baseUrl }/api/conference`, {params:params})
 };
 /**
  * 获取会议详情
