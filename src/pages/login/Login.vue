@@ -97,7 +97,10 @@
         }
         loginRequest(this.form).then(res => {
           Auth.setToken(res.access_token)
-          this.$router.push({ path: '/pages/meeting/MyList' }) 
+          // this.$router.push({ path: '/pages/meeting/MyList' }) 
+          wx.navigateTo({
+            url: '/pages/meeting/MyList'
+          })
         }).catch(err => {
           $Toast({content: err.message})
         })

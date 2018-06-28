@@ -2,11 +2,11 @@ import axios from 'axios'
 import {Auth} from './dataHandle.js'
 axios.defaults.timeout = 5000;
 axios.defaults.adapter = config => {
+    console.log(config)
     return new Promise((resolve, reject) => {
         wx.request({
             url: config.url,
             data: config.data,
-            header: config.headers,
             method: config.method,
             // 这里设置的回调函数，相当于请求接口后的then()
             success(res){

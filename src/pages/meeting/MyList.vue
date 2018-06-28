@@ -2,7 +2,6 @@
     <!-- <div id="MyList" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading.stat" infinite-scroll-distance="10"> -->
     <div id="app">
         <div id="MyList">
-
             <!-- 骨架屏 -->
             <div class="skeleton" v-if="skeleton">
                 <section v-for="item in 3" :key="item.title" class="skeleton_card card">
@@ -44,7 +43,7 @@
                 </div>
             </div>
             <!-- 分页 -->
-            <i-page :current="pagination" total="5" @change="loadMore" >
+            <i-page :current="page" :total="total_page" @change="loadMore" >
                 <view slot="prev"> 前 </view>
                 <view slot="next"> 后 </view>
             </i-page>
@@ -64,8 +63,7 @@
         data() {
             return {
                 dataList: [],
-                page: 0,
-                pagination: 1,
+                page: 1,
                 size: 5,
                 total_page: 1,
                 loading: {
@@ -84,9 +82,9 @@
         methods: {
             getMeetingList() {
                 this.loading = { stat: true, msg: '正在加载' };
-                getMeetingList({ page: this.page, size: this.size }).then(res => {
+                getMeetingList({ page: this.page - 1, size: this.size }).then(res => {
                     this.total_page = res.total_pages
-                    if (res.content && (res.content.length <= 0 || res.total_pages == this.page + 1)) {
+                    if (res.content && (res.content.length <= 0 || res.total_pages == this.page)) {
                         this.loading = { stat: false, msg: '我是有底线的' };
                     }
                     if (this.refetch) {
@@ -106,18 +104,17 @@
                 return getMeetingStatName(value)
             },
             jumpToDetail(value) {
-                this.$router.push({ path: '/pages/meeting/detail/' + value.code })
+                // this.$router.push({ path: '/pages/meeting/detail/' + value.code })
+                this.$router.push({ path: '/pages/meeting/Meeting', query: { code: value.code } })
             },
             loadMore(detail) {
                 if (this.refetch) {
                     const type = detail.target.type;
                     this.loading.stat = true;
-                    if (this.total_page != this.page + 1) {
+                    if (this.total_page != this.page) {
                         if (type === 'next') {
-                            this.pagination ++
                             this.page ++
                         } else if (type === 'prev') {
-                            this.pagination --
                             this.page --
                         }
                         this.getMeetingList();
