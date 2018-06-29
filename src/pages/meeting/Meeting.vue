@@ -1,18 +1,12 @@
 <template>
     <div id="Meeting">
-        <!-- <mt-navbar v-model="selected" :fixed="true" class="line-b">
-            <mt-tab-item id="1">会议详情</mt-tab-item>
-            <mt-tab-item id="2">签到记录</mt-tab-item>
-            <mt-tab-item id="3">就餐记录</mt-tab-item>
-        </mt-navbar> -->
-        <i-tabs :current="tabIndex" color="#f759ab" @change="changeTab">
+        <i-tabs :current="tabIndex" color="#0a70da" @change="changeTab">
             <i-tab key="1" title="会议详情"></i-tab>
             <i-tab key="2" title="签到记录"></i-tab>
             <i-tab key="3" title="就餐记录"></i-tab>
         </i-tabs>
         <div class="content">
             <transition name="slide-left" appear> 
-                <!-- <router-view class="slide-left-el"></router-view> -->
                 <!-- 会议详情 -->
                 <div id="meetingDetail" v-if="tabIndex==='1'">
                     <card-preview title="基本信息" icon="iconfont icon-message" v-if="meetingData" :item="meetingData">
@@ -54,22 +48,41 @@
                 <!-- 签到记录 -->
                 <div id="signrecord" v-if="tabIndex==='2'">
                     <card-preview v-for="item in recordData" :key="item.arrival_time" :title="item.begin_date" icon="iconfont icon-activity" :statText="getStatName(item.attendance_result)" :statColor="item.attendance_result">
-                        <card-item icon="iconfont icon-time" label="考勤时间: " :value="item.begin_time">
-                            <span class="card_content_data">～{{item.end_time}}</span>
-                        </card-item>
-                        <card-item icon="iconfont icon-yuding" label="您的签到时间: " :value="item.arrival_time"></card-item>
+                        <div>
+                            <i class="iconfont icon-time"></i>
+                            <span class="card_content_data">考勤时间: {{item.begin_time}}～{{item.end_time}}</span>
+                        </div>
+                        <div>
+                            <i class="iconfont icon-yuding"></i>
+                            <span class="card_content_data">您的签到时间: {{item.arrival_time}}</span>
+                        </div>
                     </card-preview>
                 </div>
                 <!-- 就餐记录 -->
                 <div id="mealrecord" v-if="tabIndex==='3'">
-                    <card-preview v-for="item in mealRecordData" :key="item.meal_time" :title="item.begin_date" icon="iconfont icon-activity">
-                        <card-item icon="iconfont icon-time" label="就餐时间: " :value="item.begin_time">
-                            <span class="card_content_data">～{{item.end_time}}</span>
-                        </card-item>
-                        <card-item icon="iconfont icon-coordinates" label="就餐地点: " :value="item.location"></card-item>
-                        <card-item icon="iconfont icon-yuding" label="您的就餐时间: " :value="item.meal_time" v-show="item.meal_time"></card-item>
-                        <card-item icon="iconfont icon-wucan" label="就餐状态: " value="已就餐"  v-show="item.meal_time"><i class="iconfont icon-success_fill col_green"></i></card-item>
-                        <card-item icon="iconfont icon-wucan" label="就餐状态: " value="未就餐"  v-show="!item.meal_time"><i class="iconfont icon-offline_fill col_red"></i></card-item>
+                    <card-preview v-for="(item,index) in mealRecordData" :key="index" :title="item.begin_date" icon="iconfont icon-activity" :item="item">
+                        <div>
+                            <i class="iconfont icon-time"></i>
+                            <span class="card_content_data">就餐时间: {{item.begin_time}}～{{item.end_time}}</span>
+                        </div>
+                        <div>
+                            <i class="iconfont icon-coordinates"></i>
+                            <span>就餐地点: {{item.location}}</span>
+                        </div>
+                        <div v-if="item.meal_time">
+                            <i class="iconfont icon-yuding"></i>
+                            <span>您的就餐时间: {{item.meal_time}}</span>
+                        </div>
+                        <div v-if="item.meal_time"> 
+                            <i class="iconfont icon-wucan"></i>
+                            <span>就餐状态: 已就餐</span>
+                            <i class="iconfont icon-success_fill col_green"></i>
+                        </div>
+                        <div v-if="!item.meal_time"> 
+                            <i class="iconfont icon-wucan"></i>
+                            <span>就餐状态: 未就餐</span>
+                            <i class="iconfont icon-offline_fill col_red"></i>
+                        </div>
                     </card-preview>
                 </div>
             </transition>
@@ -79,15 +92,15 @@
 </template>
 
 <script>
-    // import { Navbar, TabItem } from 'mint-ui';
+    import { CardPreview } from '@cmpt/card'
+    import { CardItem } from '@cmpt/card'
     import { getMeetingDetail, getMealRecord, getSignRecord } from '@api/api'
     import { getMeetingStatName, getSignStatName } from '@utils/constants'
-    const { $Toast } = require('../../lib/iview/base/index.js');
+    import { $Toast } from '../../lib/iview/base/index'
     export default {
         data() {
             return {
                 conference_no: undefined,
-                // selected: this.$route.meta.tabIndex,
                 mealsuccess: true,
                 mealRecordData: null,
                 recordData: null,
@@ -99,23 +112,9 @@
                     agendum:null,
                     attention:null,
                     attachment:null
-                },
-                // route:{
-                //     '1':'/meeting/detail/',
-                //     '2':'/meeting/signrecord/',
-                //     '3':'/meeting/mealrecord/',
-                // }
+                }
             }
         },
-        // components: {
-        //     mtNavbar: Navbar,
-        //     mtTabItem: TabItem,
-        // },
-        // watch:{
-        //     selected: function(newIndex,oldIndex){
-        //         this.$router.push({path:this.route[newIndex] + this.conference_no})
-        //     }
-        // },
         methods:{
             // 获取会议详情
             getMeetingDetail(){
@@ -123,24 +122,24 @@
                     this.meetingData = res;
                     this.meetingData.status = getMeetingStatName(this.meetingData.status)
                 }).catch(err=>{
-                    $Toast({content: err.message})
+                    $Toast({content: '请求失败'})
                 })
             },
             // 获取就餐记录
             getMealRecord(){
-               // getMealRecord(this.conference_no).then(res=>{
-               //     this.mealRecordData = res.content
-               // }).catch(err=>{
-               //     this.$toast(err.message)
-               //})
+               getMealRecord(this.conference_no).then(res=>{
+                   this.mealRecordData = res.content
+               }).catch(err=>{
+                   $Toast({content: '请求失败'})
+               })
             },
             // 获取签到记录
             getSignRecord() {
-                //getSignRecord(this.conference_no).then(res => {
-                //    this.recordData = res.content;
-                //}).catch(err=>{
-                //    this.$toast(err.message)
-                //})
+                getSignRecord(this.conference_no).then(res => {
+                   this.recordData = res.content;
+                }).catch(err=>{
+                   $Toast({content: '请求失败'})
+                })
             },
             getStatName(val){
                 return getSignStatName(val)
@@ -153,6 +152,8 @@
             this.$route.query.conference_no = 2222
             this.conference_no = this.$route.query.conference_no
             this.getMeetingDetail()
+            this.getSignRecord()
+            this.getMealRecord()
         }
     }
 </script>
