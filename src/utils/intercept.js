@@ -2,7 +2,6 @@ import axios from 'axios'
 import {Auth} from './dataHandle.js'
 axios.defaults.timeout = 5000;
 axios.defaults.adapter = config => {
-    console.log(config)
     return new Promise((resolve, reject) => {
         wx.request({
             url: config.url,

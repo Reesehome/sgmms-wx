@@ -4,21 +4,14 @@ module.exports = [
     //     redirect: '/pages/login/Login'
     // },
     {
-        path: '/pages/meeting/MyList',
-        name: 'MyList',
-        config: {
-            navigationBarTitleText: '会议列表',
-            "usingComponents": {
-                "i-spin": "../../lib/iview/spin/index",
-                "i-page": "../../lib/iview/page/index"
-            }
-        }
-    },
-    {
         path: '/pages/meeting/Meeting',
         name: 'Meeting',
         config: {
             navigationBarTitleText: '会议详情',
+            "usingComponents": {
+                "i-tabs": "../../lib/iview/tabs/index",
+                "i-tab": "../../lib/iview/tab/index"
+            }
         }
         //   children:
         //     [{
@@ -46,6 +39,18 @@ module.exports = [
         //       }
         //     }]
     },
+    {
+        path: '/pages/meeting/MyList',
+        name: 'MyList',
+        config: {
+            navigationBarTitleText: '会议列表',
+            "usingComponents": {
+                "i-spin": "../../lib/iview/spin/index",
+                "i-page": "../../lib/iview/page/index"
+            }
+        }
+    },
+    
     // {
     //   path: '/meal',
     //   name: 'MealConfirm',

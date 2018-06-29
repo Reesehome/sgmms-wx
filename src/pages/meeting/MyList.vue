@@ -105,7 +105,7 @@
             },
             jumpToDetail(value) {
                 // this.$router.push({ path: '/pages/meeting/detail/' + value.code })
-                this.$router.push({ path: '/pages/meeting/Meeting', query: { code: value.code } })
+                this.$router.push({ path: '/pages/meeting/Meeting', query: { conference_no: value.code } })
             },
             loadMore(detail) {
                 if (this.refetch) {
